@@ -2,6 +2,7 @@ package org.example.fastrecklessbank.api;
 
 import org.example.fastrecklessbank.api.dto.ErrorResponse;
 import org.example.fastrecklessbank.common.exception.AccountNotFoundException;
+import org.example.fastrecklessbank.common.exception.BalanceLimitExceededException;
 import org.example.fastrecklessbank.common.exception.InsufficientFundsException;
 import org.example.fastrecklessbank.common.exception.InvalidAmountException;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,11 @@ public class ApiExceptionHandler {
     @ExceptionHandler(InvalidAmountException.class)
     public ResponseEntity<ErrorResponse> handleInvalidAmount(InvalidAmountException ex) {
         return build(HttpStatus.BAD_REQUEST, "INVALID_AMOUNT", ex.getMessage());
+    }
+
+    @ExceptionHandler(BalanceLimitExceededException.class)
+    public ResponseEntity<ErrorResponse> handleBalanceLimit(BalanceLimitExceededException ex) {
+        return build(HttpStatus.CONFLICT, "BALANCE_LIMIT_EXCEEDED", ex.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

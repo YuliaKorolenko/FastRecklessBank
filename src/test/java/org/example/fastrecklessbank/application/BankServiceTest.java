@@ -1,10 +1,12 @@
 package org.example.fastrecklessbank.application;
 
 import org.example.fastrecklessbank.common.exception.AccountNotFoundException;
+import org.example.fastrecklessbank.common.exception.BalanceLimitExceededException;
 import org.example.fastrecklessbank.common.exception.InsufficientFundsException;
 import org.example.fastrecklessbank.common.exception.InvalidAmountException;
 import org.example.fastrecklessbank.domain.Account;
 import org.example.fastrecklessbank.domain.AccountId;
+import org.example.fastrecklessbank.domain.Money;
 import org.example.fastrecklessbank.infrastructure.InMemoryAccountRepository;
 import org.example.fastrecklessbank.infrastructure.InMemoryTransferHistoryRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -89,6 +91,28 @@ class BankServiceTest {
         assertThatThrownBy(() -> service.transfer(account.id(), account.id(), 100))
                 .isInstanceOf(InvalidAmountException.class);
         assertThat(service.requireAccount(account.id()).balance().cents()).isEqualTo(1_000);
+    }
+
+    @Test
+    void depositExceedingLimitRejected() {
+        Account account = service.createAccount("Alice", "Smith", Money.MAX_CENTS);
+        assertThatThrownBy(() -> service.deposit(account.id(), 1))
+                .isInstanceOf(BalanceLimitExceededException.class);
+        assertThat(service.requireAccount(account.id()).balance().cents()).isEqualTo(Money.MAX_CENTS);
+    }
+
+    @Test
+    void transferExceedingRecipientLimitLeavesBothBalancesUnchanged() {
+        Account from = service.createAccount("Alice", "Smith", 1_000);
+        Account to = service.createAccount("Bob", "Jones", Money.MAX_CENTS);
+
+        assertThatThrownBy(() -> service.transfer(from.id(), to.id(), 500))
+                .isInstanceOf(BalanceLimitExceededException.class);
+
+        // atomic: neither side changed, and nothing was recorded in history
+        assertThat(service.requireAccount(from.id()).balance().cents()).isEqualTo(1_000);
+        assertThat(service.requireAccount(to.id()).balance().cents()).isEqualTo(Money.MAX_CENTS);
+        assertThat(service.getRecentTransfers(from.id())).isEmpty();
     }
 
     @Test

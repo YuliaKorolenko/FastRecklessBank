@@ -83,6 +83,9 @@ public class BankService {
         try {
             second.lock();
             try {
+                // validate both preconditions before mutating either account
+                from.ensureSufficientFunds(amount);
+                to.ensureCanDeposit(amount);
                 from.withdraw(amount);
                 to.deposit(amount);
             } finally {

@@ -23,12 +23,22 @@ public class Account {
     }
 
     public void withdraw(Money amount) {
+        ensureSufficientFunds(amount);
+        balance = balance.minus(amount);
+    }
+
+    /** Non-mutating pre-check */
+    public void ensureSufficientFunds(Money amount) {
         if (!balance.isGreaterThanOrEqual(amount)) {
             throw new InsufficientFundsException(
                     "Insufficient funds: balance " + balance.toDisplay()
                             + ", requested " + amount.toDisplay());
         }
-        balance = balance.minus(amount);
+    }
+
+    /** Non-mutating pre-check */
+    public void ensureCanDeposit(Money amount) {
+        balance.plus(amount);
     }
 
     public void lock() {
