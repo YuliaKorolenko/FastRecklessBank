@@ -27,34 +27,6 @@ org.example.fastrecklessbank
       TransferRequest
       AccountResponse
       TransferRecordResponse
-
-  application
-    BankService
-
-  domain
-    Account
-    AccountId
-    Money
-    TransferRecord
-    TransferHistory
-
-  infrastructure
-    AccountRepository
-    InMemoryAccountRepository
-```
-
-```angular2html
-org.example.fastrecklessbank
-  api
-    AccountController
-    TransferController
-    ApiExceptionHandler
-    dto
-      CreateAccountRequest
-      MoneyOperationRequest
-      TransferRequest
-      AccountResponse
-      TransferRecordResponse
       ErrorResponse
 
   application
@@ -93,3 +65,4 @@ JUnit 5 + AssertJ
 
 Rules:
 - Save money in long 
+- 
