@@ -1,0 +1,79 @@
+:root {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: #1a1a2e;
+  background: #f4f5f7;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+
+.app {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+header h1 {
+  font-size: 1.6rem;
+  margin: 0 0 1rem;
+}
+
+main {
+  display: grid;
+  gap: 1rem;
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid #e3e5ea;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+}
+
+.panel h2 { margin: 0 0 .75rem; font-size: 1.1rem; }
+.panel h3 { margin: 1rem 0 .5rem; font-size: .95rem; }
+
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: .5rem .25rem; border-bottom: 1px solid #eee; }
+tbody tr { cursor: pointer; }
+tbody tr:hover { background: #f7f9ff; }
+tbody tr.selected { background: #eaf0ff; }
+.amount { text-align: right; font-variant-numeric: tabular-nums; }
+
+.form, .actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  align-items: center;
+}
+
+input, select {
+  padding: .45rem .55rem;
+  border: 1px solid #cfd3dc;
+  border-radius: 6px;
+  font-size: .9rem;
+}
+
+button {
+  padding: .45rem .9rem;
+  border: 0;
+  border-radius: 6px;
+  background: #3b5bdb;
+  color: #fff;
+  font-size: .9rem;
+  cursor: pointer;
+}
+button:hover { background: #2f49b8; }
+
+.banner {
+  padding: .6rem .9rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+.banner.error { background: #ffe3e3; color: #a61b1b; border: 1px solid #ffbdbd; }
+
+.field-error { color: #a61b1b; font-size: .85rem; }
+.muted { color: #8a8f98; }
+
+.history ul { margin: 0; padding-left: 1.1rem; }
+.history li { padding: .15rem 0; font-variant-numeric: tabular-nums; }

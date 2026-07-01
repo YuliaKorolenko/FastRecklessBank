@@ -2,6 +2,8 @@ package org.example.fastrecklessbank.domain;
 
 import org.example.fastrecklessbank.common.exception.InvalidAmountException;
 
+import java.util.Locale;
+
 /**
  * Money is stored in cent (long).
  */
@@ -15,6 +17,10 @@ public record Money(long cents) {
 
     public static Money ofCents(long cents) {
         return new Money(cents);
+    }
+
+    public String toDisplay() {
+        return String.format(Locale.US, "$%.2f", cents / 100.0);
     }
 
     /**

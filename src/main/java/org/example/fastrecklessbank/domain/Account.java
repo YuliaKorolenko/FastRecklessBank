@@ -25,8 +25,8 @@ public class Account {
     public void withdraw(Money amount) {
         if (!balance.isGreaterThanOrEqual(amount)) {
             throw new InsufficientFundsException(
-                    "Account " + id.id() + " has insufficient funds: balance="
-                            + balance.cents() + ", requested=" + amount.cents());
+                    "Insufficient funds: balance " + balance.toDisplay()
+                            + ", requested " + amount.toDisplay());
         }
         balance = balance.minus(amount);
     }
