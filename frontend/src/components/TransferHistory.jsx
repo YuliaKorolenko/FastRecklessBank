@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import * as api from '../api.js'
 import { centsToDisplay } from '../money.js'
+import { accountLabel, shortId } from '../format.js'
 
 export default function TransferHistory({ accountId, accounts, reloadKey }) {
   const [transfers, setTransfers] = useState([])
@@ -24,9 +25,9 @@ export default function TransferHistory({ accountId, accounts, reloadKey }) {
     }
   }, [accountId, reloadKey])
 
-  const nameFor = (id) => {
+  const labelFor = (id) => {
     const a = accounts?.find((x) => x.id === id)
-    return a ? `${a.name} ${a.surname}` : `${id.slice(0, 8)}…`
+    return a ? accountLabel(a) : shortId(id)
   }
 
   return (
@@ -38,7 +39,7 @@ export default function TransferHistory({ accountId, accounts, reloadKey }) {
       ) : (
         <ul>
           {transfers.map((t, i) => (
-            <li key={i}>→ {nameFor(t.toAccountId)} &nbsp; ${centsToDisplay(t.amountCents)}</li>
+            <li key={i}>→ {labelFor(t.toAccountId)} &nbsp; ${centsToDisplay(t.amountCents)}</li>
           ))}
         </ul>
       )}

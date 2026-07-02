@@ -39,6 +39,7 @@ tbody tr { cursor: pointer; }
 tbody tr:hover { background: #f7f9ff; }
 tbody tr.selected { background: #eaf0ff; }
 .amount { text-align: right; font-variant-numeric: tabular-nums; }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; color: #6b7280; font-size: .85rem; }
 
 .form, .actions {
   display: flex;

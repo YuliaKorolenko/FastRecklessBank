@@ -1,4 +1,5 @@
 import { centsToDisplay } from '../money.js'
+import { shortId } from '../format.js'
 
 export default function AccountsTable({ accounts, selectedId, onSelect }) {
   if (accounts.length === 0) {
@@ -9,6 +10,7 @@ export default function AccountsTable({ accounts, selectedId, onSelect }) {
       <thead>
         <tr>
           <th>Name</th>
+          <th>Account</th>
           <th className="amount">Balance</th>
         </tr>
       </thead>
@@ -20,6 +22,7 @@ export default function AccountsTable({ accounts, selectedId, onSelect }) {
             onClick={() => onSelect(a.id)}
           >
             <td>{a.name} {a.surname}</td>
+            <td className="mono">{shortId(a.id)}</td>
             <td className="amount">${centsToDisplay(a.balanceCents)}</td>
           </tr>
         ))}

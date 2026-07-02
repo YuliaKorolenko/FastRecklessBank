@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { displayToCents } from '../money.js'
+import { accountLabel } from '../format.js'
 
 export default function TransferForm({ accounts, onTransfer }) {
   const [from, setFrom] = useState('')
@@ -38,13 +39,13 @@ export default function TransferForm({ accounts, onTransfer }) {
       <select value={from} onChange={(e) => setFrom(e.target.value)}>
         <option value="">From…</option>
         {accounts.map((a) => (
-          <option key={a.id} value={a.id}>{a.name} {a.surname}</option>
+          <option key={a.id} value={a.id}>{accountLabel(a)}</option>
         ))}
       </select>
       <select value={to} onChange={(e) => setTo(e.target.value)}>
         <option value="">To…</option>
         {accounts.map((a) => (
-          <option key={a.id} value={a.id}>{a.name} {a.surname}</option>
+          <option key={a.id} value={a.id}>{accountLabel(a)}</option>
         ))}
       </select>
       <input placeholder="Amount" value={amount} onChange={(e) => setAmount(e.target.value)} />
