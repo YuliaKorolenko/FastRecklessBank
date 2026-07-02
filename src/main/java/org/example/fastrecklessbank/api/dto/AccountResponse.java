@@ -8,13 +8,13 @@ public record AccountResponse(
         UUID id,
         String name,
         String surname,
-        long balanceCents) {
+        String balanceCents) {
 
     public static AccountResponse from(Account account) {
         return new AccountResponse(
                 account.id().id(),
                 account.name(),
                 account.surname(),
-                account.balance().cents());
+                Long.toString(account.balance().cents()));
     }
 }

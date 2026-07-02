@@ -8,12 +8,12 @@ import java.util.UUID;
 public record TransferRecordResponse(
         UUID fromAccountId,
         UUID toAccountId,
-        long amountCents) {
+        String amountCents) {
 
     public static TransferRecordResponse from(TransferRecord record) {
         return new TransferRecordResponse(
                 record.fromAccount().id(),
                 record.toAccount().id(),
-                record.amount().cents());
+                Long.toString(record.amount().cents()));
     }
 }

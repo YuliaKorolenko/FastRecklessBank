@@ -40,7 +40,7 @@ class BankApiIntegrationTest {
                                 """.formatted(name, surname, initialDeposit)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value(name))
-                .andExpect(jsonPath("$.balanceCents").value(initialDeposit))
+                .andExpect(jsonPath("$.balanceCents").value(String.valueOf(initialDeposit)))
                 .andReturn();
         String id = JsonPath.read(result.getResponse().getContentAsString(), "$.id");
         return UUID.fromString(id);
@@ -54,13 +54,13 @@ class BankApiIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"amountCents\":500}"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.balanceCents").value(1_500));
+                .andExpect(jsonPath("$.balanceCents").value("1500"));
 
         mockMvc.perform(post("/api/accounts/{id}/withdraw", id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"amountCents\":200}"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.balanceCents").value(1_300));
+                .andExpect(jsonPath("$.balanceCents").value("1300"));
     }
 
     @Test
@@ -74,13 +74,13 @@ class BankApiIntegrationTest {
                                 {"fromAccountId":"%s","toAccountId":"%s","amountCents":400}
                                 """.formatted(from, to)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.balanceCents").value(600));
+                .andExpect(jsonPath("$.balanceCents").value("600"));
 
         mockMvc.perform(get("/api/accounts/{id}/transfers", from))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(1))
                 .andExpect(jsonPath("$[0].toAccountId").value(to.toString()))
-                .andExpect(jsonPath("$[0].amountCents").value(400));
+                .andExpect(jsonPath("$[0].amountCents").value("400"));
     }
 
     @Test
